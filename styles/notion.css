@@ -10,6 +10,17 @@
 .notion {
   --notion-max-width: 720px;
   --notion-header-height: 54px;
+
+  --custom-font : ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    Liberation Mono,
+    Courier New,
+    monospace;
+
+  font-family: var(--custom-font);
 }
 
 .notion-frame {
@@ -330,9 +341,9 @@
   );
 }
 
-.dark-mode {
+/* .dark-mode {
   background-color : #1d1f21;
-}
+} */
 
 /* disable highlighting in dark mode */
 .dark-mode .notion-red_background,
