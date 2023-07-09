@@ -9,12 +9,12 @@ export default siteConfig({
   rootNotionSpaceId: null,
 
   // basic site info (required)
-  name: 'Writings on smart contract developmenty',
+  name: 'Blog on Blockchain',
   domain: 'blog.manishgotame.com.np',
   author: 'Manish Gotame',
 
   // open graph metadata (optional)
-  description: 'Example Next.js Notion Starter Kit Site',
+  description: 'Writings on Software Development and Blockchain',
 
   // social usernames (optional)
   twitter: 'manishgotame',
