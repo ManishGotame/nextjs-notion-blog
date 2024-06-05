@@ -15,7 +15,6 @@ import 'react-notion-x/src/styles.css'
 
 import Layout from '@/components/Layout'
 import '@/styles/global.css'
-import '@/styles/notion.css'
 import '@/styles/prism-theme.css'
 
 export default function App({ Component, pageProps }: AppProps) {

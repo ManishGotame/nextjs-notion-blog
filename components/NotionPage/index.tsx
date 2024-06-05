@@ -264,7 +264,7 @@ export const NotionPage: React.FC<types.PageProps> = ({
         recordMap={recordMap}
         rootPageId={site.rootNotionPageId}
         rootDomain={site.domain}
-        fullPage={!isLiteMode}
+        // fullPage={!isLiteMode}
         previewImages={!!recordMap.preview_images}
         showCollectionViewDropdown={false}
         showTableOfContents={showTableOfContents}
@@ -275,7 +275,6 @@ export const NotionPage: React.FC<types.PageProps> = ({
         mapPageUrl={siteMapPageUrl}
         mapImageUrl={mapImageUrl}
         searchNotion={config.isSearchEnabled ? searchNotion : null}
-        pageAside={pageAside}
         footer={footer}
       />
     </>

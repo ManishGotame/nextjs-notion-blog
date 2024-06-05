@@ -26,6 +26,7 @@ export const theme = {
       'hacker-news': '#FF965A',
       twitter: '#479BEA',
       current: 'currentColor',
+      jet: "#37352f",
     },
   },
 }
