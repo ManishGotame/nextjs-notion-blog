@@ -87,8 +87,8 @@ export function SidebarNavigation() {
       label: 'Projects',
       items: [
         {
-          href: 'https://campsite.co',
-          label: 'Campsite',
+          href: 'https://openpastpaper.com',
+          label: 'Open Past Paper',
           icon: CampsiteIcon,
           trailingAccessory: ExternalLinkIcon,
           isActive: false,

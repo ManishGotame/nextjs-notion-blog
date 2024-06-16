@@ -26,6 +26,11 @@ import { PageHead } from '../PageHead'
 import styles from '../styles.module.css'
 import { NotionPageHeader } from './NotionPageHeader'
 
+interface extractTitlesResponse {
+  title: string
+  id: string
+}
+
 // -----------------------------------------------------------------------------
 // dynamic imports for optional components
 // -----------------------------------------------------------------------------
@@ -140,6 +145,28 @@ const propertyTextValue = (
   return defaultFn()
 }
 
+const extractTitles = (data: types.ExtendedRecordMap) => {
+  const titles: extractTitlesResponse[] = []
+  const blocks = data.block
+
+  for (const blockId in blocks) {
+    // eslint-disable-next-line no-prototype-builtins
+    if (blocks.hasOwnProperty(blockId)) {
+      const block = blocks[blockId].value
+
+      if (block.type === 'page' && block.properties && block.properties.title) {
+        const title = block.properties.title[0][0]
+        titles.push({
+          title: title,
+          id: block.id
+        })
+      }
+    }
+  }
+
+  return titles
+}
+
 export const NotionPage: React.FC<types.PageProps> = ({
   site,
   recordMap,
@@ -209,13 +236,17 @@ export const NotionPage: React.FC<types.PageProps> = ({
   }
 
   const title = getBlockTitle(block, recordMap) || site.name
+  const articleTitles = extractTitles(recordMap)
 
   console.log('notion page', {
     isDev: config.isDev,
     title,
     pageId,
     rootNotionPageId: site.rootNotionPageId,
-    recordMap
+    recordMap,
+    showTableOfContents,
+    isBlogPost,
+    articleTitles
   })
 
   if (!config.isServer) {
@@ -242,6 +273,9 @@ export const NotionPage: React.FC<types.PageProps> = ({
 
   return (
     <>
+      <div className='fixed w-full bg-gray z-10 text-ml text-bold p-5 border-1 bg-grey-200'>
+        {title}
+      </div>
       <PageHead
         pageId={pageId}
         site={site}
@@ -254,29 +288,33 @@ export const NotionPage: React.FC<types.PageProps> = ({
       {isLiteMode && <BodyClassName className='notion-lite' />}
       {isDarkMode && <BodyClassName className='dark-mode' />}
 
-      <NotionRenderer
-        bodyClassName={cs(
-          styles.notion,
-          pageId === site.rootNotionPageId && 'index-page'
-        )}
-        darkMode={isDarkMode}
-        components={components}
-        recordMap={recordMap}
-        rootPageId={site.rootNotionPageId}
-        rootDomain={site.domain}
-        // fullPage={!isLiteMode}
-        previewImages={!!recordMap.preview_images}
-        showCollectionViewDropdown={false}
-        showTableOfContents={showTableOfContents}
-        minTableOfContentsItems={minTableOfContentsItems}
-        defaultPageIcon={config.defaultPageIcon}
-        defaultPageCover={config.defaultPageCover}
-        defaultPageCoverPosition={config.defaultPageCoverPosition}
-        mapPageUrl={siteMapPageUrl}
-        mapImageUrl={mapImageUrl}
-        searchNotion={config.isSearchEnabled ? searchNotion : null}
-        footer={footer}
-      />
+      <div className='mt-5 mb-20'>
+        <NotionRenderer
+          bodyClassName={cs(
+            styles.notion,
+            pageId === site.rootNotionPageId && 'index-page'
+          )}
+          darkMode={isDarkMode}
+          components={components}
+          recordMap={recordMap}
+          rootPageId={site.rootNotionPageId}
+          rootDomain={site.domain}
+          // fullPage={!isLiteMode}
+          previewImages={!!recordMap.preview_images}
+          showCollectionViewDropdown={false}
+          showTableOfContents={showTableOfContents}
+          minTableOfContentsItems={minTableOfContentsItems}
+          defaultPageIcon={config.defaultPageIcon}
+          defaultPageCover={config.defaultPageCover}
+          defaultPageCoverPosition={config.defaultPageCoverPosition}
+          mapPageUrl={siteMapPageUrl}
+          mapImageUrl={mapImageUrl}
+          searchNotion={config.isSearchEnabled ? searchNotion : null}
+          footer={footer}
+        />
+      </div>
+
+      <Footer />
     </>
   )
 }
