@@ -19,17 +19,14 @@ import { NotionRenderer } from 'react-notion-x'
 import TweetEmbed from 'react-tweet-embed'
 import { useSearchParam } from 'react-use'
 
+import { getTitles } from '@/lib/get-titles'
+
 import { Footer } from '../Footer'
 import { Loading } from '../Loading'
 import { PageAside } from '../PageAside'
 import { PageHead } from '../PageHead'
 import styles from '../styles.module.css'
 import { NotionPageHeader } from './NotionPageHeader'
-
-interface extractTitlesResponse {
-  title: string
-  id: string
-}
 
 // -----------------------------------------------------------------------------
 // dynamic imports for optional components
@@ -145,28 +142,6 @@ const propertyTextValue = (
   return defaultFn()
 }
 
-const extractTitles = (data: types.ExtendedRecordMap) => {
-  const titles: extractTitlesResponse[] = []
-  const blocks = data.block
-
-  for (const blockId in blocks) {
-    // eslint-disable-next-line no-prototype-builtins
-    if (blocks.hasOwnProperty(blockId)) {
-      const block = blocks[blockId].value
-
-      if (block.type === 'page' && block.properties && block.properties.title) {
-        const title = block.properties.title[0][0]
-        titles.push({
-          title: title,
-          id: block.id
-        })
-      }
-    }
-  }
-
-  return titles
-}
-
 export const NotionPage: React.FC<types.PageProps> = ({
   site,
   recordMap,
@@ -236,7 +211,7 @@ export const NotionPage: React.FC<types.PageProps> = ({
   }
 
   const title = getBlockTitle(block, recordMap) || site.name
-  const articleTitles = extractTitles(recordMap)
+  const articleTitles = getTitles(recordMap)
 
   console.log('notion page', {
     isDev: config.isDev,
@@ -246,7 +221,8 @@ export const NotionPage: React.FC<types.PageProps> = ({
     recordMap,
     showTableOfContents,
     isBlogPost,
-    articleTitles
+    articleTitles,
+    siteMapPageUrl
   })
 
   if (!config.isServer) {
