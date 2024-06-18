@@ -70,3 +70,8 @@ export interface NotionPageInfo {
   authorImage: string
   detail: string
 }
+
+export interface ExtractTitlesResponse {
+  title: string
+  id: string
+}

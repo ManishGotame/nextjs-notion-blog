@@ -1,12 +1,16 @@
 import * as React from 'react'
 
+import { resolveNotionPage } from 'lib/resolve-notion-page'
+
 import { NotionPage } from '@/components/NotionPage'
 import { domain } from '@/lib/config'
-import { resolveNotionPage } from '@/lib/resolve-notion-page'
 
 export const getStaticProps = async () => {
   try {
-    const props = await resolveNotionPage(domain)
+    const props = await resolveNotionPage(
+      domain,
+      'Home-Page-bee83c4bea444e2794fa7fafa6b578f7' // temp
+    )
 
     return { props, revalidate: 10 }
   } catch (err) {

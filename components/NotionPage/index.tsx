@@ -4,28 +4,28 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
+import * as config from 'lib/config'
+import * as types from 'lib/types'
 import cs from 'classnames'
+import { mapImageUrl } from 'lib/map-image-url'
+import { getCanonicalPageUrl, mapPageUrl } from 'lib/map-page-url'
+import { searchNotion } from 'lib/search-notion'
+import { useDarkMode } from 'lib/use-dark-mode'
 import { PageBlock } from 'notion-types'
 import { formatDate, getBlockTitle, getPageProperty } from 'notion-utils'
+import Page404 from 'pages/404'
 import BodyClassName from 'react-body-classname'
 import { NotionRenderer } from 'react-notion-x'
 import TweetEmbed from 'react-tweet-embed'
 import { useSearchParam } from 'react-use'
 
-import * as config from '@/lib/config'
-import * as types from '@/lib/types'
-import { mapImageUrl } from '@/lib/map-image-url'
-import { getCanonicalPageUrl, mapPageUrl } from '@/lib/map-page-url'
-import { searchNotion } from '@/lib/search-notion'
-import { useDarkMode } from '@/lib/use-dark-mode'
+import { getTitles } from '@/lib/get-titles'
 
-import { Footer } from './Footer'
-import { Loading } from './Loading'
+import { Footer } from '../Footer'
+import { Loading } from '../Loading'
+import { PageHead } from '../PageHead'
+import styles from '../styles.module.css'
 import { NotionPageHeader } from './NotionPageHeader'
-import { Page404 } from './Page404'
-import { PageAside } from './PageAside'
-import { PageHead } from './PageHead'
-import styles from './styles.module.css'
 
 // -----------------------------------------------------------------------------
 // dynamic imports for optional components
@@ -192,13 +192,6 @@ export const NotionPage: React.FC<types.PageProps> = ({
   const showTableOfContents = !!isBlogPost
   const minTableOfContentsItems = 3
 
-  const pageAside = React.useMemo(
-    () => (
-      <PageAside block={block} recordMap={recordMap} isBlogPost={isBlogPost} />
-    ),
-    [block, recordMap, isBlogPost]
-  )
-
   const footer = React.useMemo(() => <Footer />, [])
 
   if (router.isFallback) {
@@ -210,13 +203,18 @@ export const NotionPage: React.FC<types.PageProps> = ({
   }
 
   const title = getBlockTitle(block, recordMap) || site.name
+  const articleTitles = getTitles(recordMap)
 
   console.log('notion page', {
     isDev: config.isDev,
     title,
     pageId,
     rootNotionPageId: site.rootNotionPageId,
-    recordMap
+    recordMap,
+    showTableOfContents,
+    isBlogPost,
+    articleTitles,
+    siteMapPageUrl
   })
 
   if (!config.isServer) {
@@ -243,6 +241,9 @@ export const NotionPage: React.FC<types.PageProps> = ({
 
   return (
     <>
+      <div className='fixed w-full bg-gray z-10 text-ml text-bold p-5 border-1 bg-grey-200'>
+        {title}
+      </div>
       <PageHead
         pageId={pageId}
         site={site}
@@ -255,30 +256,33 @@ export const NotionPage: React.FC<types.PageProps> = ({
       {isLiteMode && <BodyClassName className='notion-lite' />}
       {isDarkMode && <BodyClassName className='dark-mode' />}
 
-      <NotionRenderer
-        bodyClassName={cs(
-          styles.notion,
-          pageId === site.rootNotionPageId && 'index-page'
-        )}
-        darkMode={isDarkMode}
-        components={components}
-        recordMap={recordMap}
-        rootPageId={site.rootNotionPageId}
-        rootDomain={site.domain}
-        fullPage={!isLiteMode}
-        previewImages={!!recordMap.preview_images}
-        showCollectionViewDropdown={false}
-        showTableOfContents={showTableOfContents}
-        minTableOfContentsItems={minTableOfContentsItems}
-        defaultPageIcon={config.defaultPageIcon}
-        defaultPageCover={config.defaultPageCover}
-        defaultPageCoverPosition={config.defaultPageCoverPosition}
-        mapPageUrl={siteMapPageUrl}
-        mapImageUrl={mapImageUrl}
-        searchNotion={config.isSearchEnabled ? searchNotion : null}
-        pageAside={pageAside}
-        footer={footer}
-      />
+      <div className='mt-5 mb-20'>
+        <NotionRenderer
+          bodyClassName={cs(
+            styles.notion,
+            pageId === site.rootNotionPageId && 'index-page'
+          )}
+          darkMode={isDarkMode}
+          components={components}
+          recordMap={recordMap}
+          rootPageId={site.rootNotionPageId}
+          rootDomain={site.domain}
+          // fullPage={!isLiteMode}
+          previewImages={!!recordMap.preview_images}
+          showCollectionViewDropdown={false}
+          showTableOfContents={showTableOfContents}
+          minTableOfContentsItems={minTableOfContentsItems}
+          defaultPageIcon={config.defaultPageIcon}
+          defaultPageCover={config.defaultPageCover}
+          defaultPageCoverPosition={config.defaultPageCoverPosition}
+          mapPageUrl={siteMapPageUrl}
+          mapImageUrl={mapImageUrl}
+          searchNotion={config.isSearchEnabled ? searchNotion : null}
+          footer={footer}
+        />
+      </div>
+
+      <Footer />
     </>
   )
 }

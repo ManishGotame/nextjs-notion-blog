@@ -52,6 +52,5 @@ export async function getStaticPaths() {
 }
 
 export default function NotionDomainDynamicPage(props) {
-  console.log(props)
   return <NotionPage {...props} />
 }

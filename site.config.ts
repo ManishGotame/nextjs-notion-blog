@@ -14,7 +14,7 @@ export default siteConfig({
   author: 'Manish Gotame',
 
   // open graph metadata (optional)
-  description: 'Writings on Software Development and Blockchain',
+  description: 'Development blog',
 
   // social usernames (optional)
   twitter: 'manishgotame',

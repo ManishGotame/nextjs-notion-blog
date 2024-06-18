@@ -1,6 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
+import * as libConfig from 'lib/config'
 import got from 'got'
+import { mapImageUrl } from 'lib/map-image-url'
+import { notion } from 'lib/notion-api'
+import { NotionPageInfo } from 'lib/types'
 import { PageBlock } from 'notion-types'
 import {
   getBlockIcon,
@@ -9,11 +13,6 @@ import {
   isUrl,
   parsePageId
 } from 'notion-utils'
-
-import * as libConfig from '@/lib/config'
-import { mapImageUrl } from '@/lib/map-image-url'
-import { notion } from '@/lib/notion-api'
-import { NotionPageInfo } from '@/lib/types'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'POST') {
