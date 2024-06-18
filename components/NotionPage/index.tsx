@@ -23,7 +23,6 @@ import { getTitles } from '@/lib/get-titles'
 
 import { Footer } from '../Footer'
 import { Loading } from '../Loading'
-import { PageAside } from '../PageAside'
 import { PageHead } from '../PageHead'
 import styles from '../styles.module.css'
 import { NotionPageHeader } from './NotionPageHeader'
@@ -192,13 +191,6 @@ export const NotionPage: React.FC<types.PageProps> = ({
 
   const showTableOfContents = !!isBlogPost
   const minTableOfContentsItems = 3
-
-  const pageAside = React.useMemo(
-    () => (
-      <PageAside block={block} recordMap={recordMap} isBlogPost={isBlogPost} />
-    ),
-    [block, recordMap, isBlogPost]
-  )
 
   const footer = React.useMemo(() => <Footer />, [])
 

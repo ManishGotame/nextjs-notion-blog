@@ -2,21 +2,14 @@ import { useRouter } from 'next/router'
 
 import {
   AMAIcon,
-  AppDissectionIcon,
   BookmarksIcon,
   CampsiteIcon,
   ExternalLinkIcon,
-  FigmaIcon,
   GitHubIcon,
-  HackerNewsIcon,
   HomeIcon,
-  PodcastIcon,
-  SecurityChecklistIcon,
   StackIcon,
-  StaffDesignIcon,
   TwitterIcon,
-  WritingIcon,
-  YouTubeIcon
+  WritingIcon
 } from '@/components/Icon'
 
 import { NavigationLink } from './NavigationLink'
@@ -94,66 +87,6 @@ export function SidebarNavigation() {
           isActive: false,
           trailingAction: null,
           isExternal: true
-        },
-
-        {
-          href: 'https://designdetails.fm',
-          label: 'Design Details',
-          icon: PodcastIcon,
-          trailingAccessory: ExternalLinkIcon,
-          isActive: false,
-          trailingAction: null,
-          isExternal: true
-        },
-
-        {
-          href: 'https://staff.design',
-          label: 'Staff Design',
-          icon: StaffDesignIcon,
-          trailingAccessory: ExternalLinkIcon,
-          isActive: false,
-          trailingAction: null,
-          isExternal: true
-        },
-
-        {
-          href: 'https://figma.com/@brian',
-          label: 'Figma Plugins',
-          icon: FigmaIcon,
-          trailingAccessory: ExternalLinkIcon,
-          isActive: false,
-          trailingAction: null,
-          isExternal: true
-        },
-
-        {
-          href: '/security',
-          label: 'Security Checklist',
-          icon: SecurityChecklistIcon,
-          trailingAccessory: null,
-          isActive: router.asPath.indexOf('/security') >= 0,
-          trailingAction: null,
-          isExternal: false
-        },
-
-        {
-          href: '/hn',
-          label: 'Hacker News',
-          icon: HackerNewsIcon,
-          trailingAccessory: null,
-          isActive: router.asPath.indexOf('/hn') >= 0,
-          trailingAction: null,
-          isExternal: false
-        },
-
-        {
-          href: '/app-dissection',
-          label: 'App Dissection',
-          icon: AppDissectionIcon,
-          trailingAccessory: null,
-          isActive: router.asPath.indexOf('/app-dissection') >= 0,
-          trailingAction: null,
-          isExternal: false
         }
       ]
     },
@@ -161,7 +94,7 @@ export function SidebarNavigation() {
       label: 'Online',
       items: [
         {
-          href: 'https://twitter.com/brian_lovin',
+          href: 'https://twitter.com/manigotame',
           label: 'Twitter',
           icon: TwitterIcon,
           trailingAccessory: ExternalLinkIcon,
@@ -171,29 +104,9 @@ export function SidebarNavigation() {
         },
 
         {
-          href: 'https://www.youtube.com/channel/UC-esBYEUGQ6iK1wmw76f5MA',
-          label: 'YouTube',
-          icon: YouTubeIcon,
-          trailingAccessory: ExternalLinkIcon,
-          isActive: false,
-          trailingAction: null,
-          isExternal: true
-        },
-
-        {
-          href: 'https://github.com/brianlovin',
+          href: 'https://github.com/manishgotame',
           label: 'GitHub',
           icon: GitHubIcon,
-          trailingAccessory: ExternalLinkIcon,
-          isActive: false,
-          trailingAction: null,
-          isExternal: true
-        },
-
-        {
-          href: 'https://figma.com/@brian',
-          label: 'Figma',
-          icon: FigmaIcon,
           trailingAccessory: ExternalLinkIcon,
           isActive: false,
           trailingAction: null,

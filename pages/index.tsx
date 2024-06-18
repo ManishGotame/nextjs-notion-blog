@@ -7,7 +7,10 @@ import { domain } from '@/lib/config'
 
 export const getStaticProps = async () => {
   try {
-    const props = await resolveNotionPage(domain)
+    const props = await resolveNotionPage(
+      domain,
+      'Home-Page-bee83c4bea444e2794fa7fafa6b578f7' // temp
+    )
 
     return { props, revalidate: 10 }
   } catch (err) {
