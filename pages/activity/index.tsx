@@ -8,50 +8,55 @@ const customTheme: ThemeInput = {
   dark: ['#161a23', '#803300', '#bf5700', '#ff7300', '#ffad42']
 }
 
+const yearStartActivity: Activity = {
+  date: '2024-01-01',
+  count: 0,
+  level: 0
+}
+
+const yearEndActivity: Activity = {
+  date: '2024-12-31',
+  count: 0,
+  level: 0
+}
+
+const emptyData = [yearStartActivity, yearEndActivity]
+const cyclingActivityTypes = ['cycling', 'mountain_biking']
+
 export default function ActivityPage() {
-  const [activityData, setActivityData] = useState<Activity[]>([
-    {
-      date: '2024-01-01',
-      count: 0,
-      level: 0
-    },
-    {
-      date: '2024-12-31',
-      count: 0,
-      level: 0
-    }
-  ])
+  const [cyclingData, setCyclingData] = useState<Activity[]>(emptyData)
+  const [gymData, setGymData] = useState<Activity[]>(emptyData)
 
   useEffect(() => {
-    const formattedData: Activity[] = [
-      {
-        date: '2024-01-01',
-        count: 0,
-        level: 0
-      }
-    ]
+    const formattedCyclingData: Activity[] = [yearStartActivity]
+    const formattedGymData: Activity[] = [yearStartActivity]
 
-    fetch('http://127.0.0.1:5000/activity-graph-data')
+    fetch('https://garmin-sync-api.vercel.app/activity-graph-data')
       .then((response) => {
         return response.json()
       })
       .then((data) => {
         for (const key in data) {
-          formattedData.push({
+          const cyclingCount = data[key].reduce((total, activity) => {
+            if (cyclingActivityTypes.includes(activity)) total += 1
+            return total
+          }, 0)
+
+          formattedCyclingData.push({
             date: key,
-            count: data[key].length,
-            level: data[key].length % 4
+            count: cyclingCount,
+            level: cyclingCount % 4
+          })
+
+          formattedGymData.push({
+            date: key,
+            count: data[key].length - cyclingCount,
+            level: (data[key].length - cyclingCount) % 4
           })
         }
 
-        setActivityData([
-          ...formattedData,
-          {
-            date: '2024-12-31',
-            count: 0,
-            level: 0
-          }
-        ])
+        setCyclingData([...formattedCyclingData, yearEndActivity])
+        setGymData([...formattedGymData, yearEndActivity])
       })
       .catch((err) => {
         console.log(err)
@@ -66,11 +71,15 @@ export default function ActivityPage() {
 
       <div className='mt-10 flex flex-col items-center gap-20'>
         <div className='flex flex-col gap-5'>
-          <div className='text-md text-bold'>Gym & Cycling</div>
-          <ActivityCalendar data={activityData} theme={customTheme} />
+          <div className='text-md text-bold'>Cycling Activity</div>
+          <ActivityCalendar data={cyclingData} theme={customTheme} />
         </div>
         <div className='flex flex-col gap-5'>
-          <div className='text-md text-bold'>Github Contribution</div>
+          <div className='text-md text-bold'>Gym Activity</div>
+          <ActivityCalendar data={gymData} theme={customTheme} />
+        </div>
+        <div className='flex flex-col gap-5'>
+          <div className='text-md text-bold'>Github Activity</div>
           <GitHubCalendar
             username='manishgotame'
             year={new Date().getFullYear()}
