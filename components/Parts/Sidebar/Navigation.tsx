@@ -38,6 +38,16 @@ export function SidebarNavigation() {
           isActive: router.asPath.indexOf('/writing') >= 0,
           trailingAction: null,
           isExternal: false
+        },
+
+        {
+          href: '/activity',
+          label: 'Activity Heatmap',
+          icon: StackIcon,
+          trailingAccessory: null,
+          isActive: router.asPath.indexOf('/activity') >= 0,
+          trailingAction: null,
+          isExternal: false
         }
       ]
     },
@@ -61,16 +71,6 @@ export function SidebarNavigation() {
           isActive:
             router.asPath.indexOf('/ama') >= 0 &&
             !router.asPath.startsWith('/ama/pending'),
-          trailingAction: null,
-          isExternal: false
-        },
-
-        {
-          href: '/stack',
-          label: 'Stack',
-          icon: StackIcon,
-          trailingAccessory: null,
-          isActive: router.asPath.indexOf('/stack') >= 0,
           trailingAction: null,
           isExternal: false
         }
