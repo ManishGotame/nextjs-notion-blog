@@ -5,9 +5,14 @@ import GitHubCalendar from 'react-github-calendar'
 
 import Header from '@/components/Parts/Header'
 
-const customTheme: ThemeInput = {
+const cyclingTheme: ThemeInput = {
   light: ['#161a23', '#803300', '#bf5700', '#ff7300', '#ffad42'],
   dark: ['#161a23', '#803300', '#bf5700', '#ff7300', '#ffad42']
+}
+
+const gymTheme: ThemeInput = {
+  light: ['#161a23', '#005b99', '#007cc3', '#339fd8', '#66c2ec'],
+  dark: ['#161a23', '#003366', '#005b99', '#007cc3', '#339fd8']
 }
 
 const yearStartActivity: Activity = {
@@ -82,11 +87,11 @@ export default function ActivityPage() {
               Open Strava
             </a>
           </div>
-          <ActivityCalendar data={cyclingData} theme={customTheme} />
+          <ActivityCalendar data={cyclingData} theme={cyclingTheme} />
         </div>
         <div className='flex flex-col gap-5'>
           <div className='text-md text-bold'>Gym Activity</div>
-          <ActivityCalendar data={gymData} theme={customTheme} />
+          <ActivityCalendar data={gymData} theme={gymTheme} />
         </div>
         <div className='flex flex-col gap-5'>
           <div className='text-md text-bold'>Github Activity</div>
