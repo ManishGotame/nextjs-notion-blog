@@ -90,11 +90,31 @@ export default function ActivityPage() {
           <ActivityCalendar data={cyclingData} theme={cyclingTheme} />
         </div>
         <div className='flex flex-col gap-5'>
-          <div className='text-md text-bold'>Gym Activity</div>
+          <div className='flex content-center items-center gap-4 text-md text-bold'>
+            Gym Activity
+            <a
+              href='https://connect.garmin.com/modern/profile/5261c750-38a1-4e40-a398-b1c7eea85732'
+              target='_blank'
+              className='bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300'
+              rel='noreferrer'
+            >
+              Open Garmin
+            </a>
+          </div>
           <ActivityCalendar data={gymData} theme={gymTheme} />
         </div>
         <div className='flex flex-col gap-5'>
-          <div className='text-md text-bold'>Github Activity</div>
+          <div className='flex content-center items-center gap-2 text-md text-bold'>
+            Github Activity
+            <a
+              href='https://github.com/manishgotame'
+              target='_blank'
+              className='bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300'
+              rel='noreferrer'
+            >
+              Open Github
+            </a>
+          </div>{' '}
           <GitHubCalendar
             username='manishgotame'
             year={new Date().getFullYear()}
