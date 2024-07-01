@@ -4,6 +4,7 @@ import type { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 
 import * as Fathom from 'fathom-client'
+import { SidebarProvider } from 'Providers'
 // used for rendering equations (optional)
 import 'katex/dist/katex.min.css'
 import { fathomConfig, fathomId, posthogConfig, posthogId } from 'lib/config'
@@ -46,6 +47,10 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   }, [router.events])
 
-  // eslint-disable-next-line react/no-children-prop
-  return <Layout children={<Component {...pageProps} />} />
+  return (
+    <SidebarProvider>
+      {/* eslint-disable-next-line react/no-children-prop */}
+      <Layout children={<Component {...pageProps} />} />
+    </SidebarProvider>
+  )
 }
