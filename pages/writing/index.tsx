@@ -27,7 +27,7 @@ export default function WritingPage(props) {
 
   return (
     <div className='h-[100%] border-r border-gray-150 pb-10 transition duration-200 ease-in-out dark:border-gray-800 w-[100%] lg:translate-x-0'>
-      <div className='p-5 border-b border-gray-800 text-sm font-bold text-primary transform-gpu line-clamp-1'>
+      <div className='p-5 border-b border-gray-800 text-md font-bold text-primary transform-gpu line-clamp-1'>
         Writing
       </div>
       <div className='p-5'>
